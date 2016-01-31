@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+<meta name="author" content="Phill Clarke" />
+
+<meta name="date" content="2016-01-31" />
+
+<title>How to Use backblazer</title>
+
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+
+
+<link href="data:text/css;charset=utf-8,body%20%7B%0Abackground%2Dcolor%3A%20%23fff%3B%0Amargin%3A%201em%20auto%3B%0Amax%2Dwidth%3A%20700px%3B%0Aoverflow%3A%20visible%3B%0Apadding%2Dleft%3A%202em%3B%0Apadding%2Dright%3A%202em%3B%0Afont%2Dfamily%3A%20%22Open%20Sans%22%2C%20%22Helvetica%20Neue%22%2C%20Helvetica%2C%20Arial%2C%20sans%2Dserif%3B%0Afont%2Dsize%3A%2014px%3B%0Aline%2Dheight%3A%201%2E35%3B%0A%7D%0A%23header%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0A%23TOC%20%7B%0Aclear%3A%20both%3B%0Amargin%3A%200%200%2010px%2010px%3B%0Apadding%3A%204px%3B%0Awidth%3A%20400px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Aborder%2Dradius%3A%205px%3B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Afont%2Dsize%3A%2013px%3B%0Aline%2Dheight%3A%201%2E3%3B%0A%7D%0A%23TOC%20%2Etoctitle%20%7B%0Afont%2Dweight%3A%20bold%3B%0Afont%2Dsize%3A%2015px%3B%0Amargin%2Dleft%3A%205px%3B%0A%7D%0A%23TOC%20ul%20%7B%0Apadding%2Dleft%3A%2040px%3B%0Amargin%2Dleft%3A%20%2D1%2E5em%3B%0Amargin%2Dtop%3A%205px%3B%0Amargin%2Dbottom%3A%205px%3B%0A%7D%0A%23TOC%20ul%20ul%20%7B%0Amargin%2Dleft%3A%20%2D2em%3B%0A%7D%0A%23TOC%20li%20%7B%0Aline%2Dheight%3A%2016px%3B%0A%7D%0Atable%20%7B%0Amargin%3A%201em%20auto%3B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dcolor%3A%20%23DDDDDD%3B%0Aborder%2Dstyle%3A%20outset%3B%0Aborder%2Dcollapse%3A%20collapse%3B%0A%7D%0Atable%20th%20%7B%0Aborder%2Dwidth%3A%202px%3B%0Apadding%3A%205px%3B%0Aborder%2Dstyle%3A%20inset%3B%0A%7D%0Atable%20td%20%7B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dstyle%3A%20inset%3B%0Aline%2Dheight%3A%2018px%3B%0Apadding%3A%205px%205px%3B%0A%7D%0Atable%2C%20table%20th%2C%20table%20td%20%7B%0Aborder%2Dleft%2Dstyle%3A%20none%3B%0Aborder%2Dright%2Dstyle%3A%20none%3B%0A%7D%0Atable%20thead%2C%20table%20tr%2Eeven%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Ap%20%7B%0Amargin%3A%200%2E5em%200%3B%0A%7D%0Ablockquote%20%7B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Apadding%3A%200%2E25em%200%2E75em%3B%0A%7D%0Ahr%20%7B%0Aborder%2Dstyle%3A%20solid%3B%0Aborder%3A%20none%3B%0Aborder%2Dtop%3A%201px%20solid%20%23777%3B%0Amargin%3A%2028px%200%3B%0A%7D%0Adl%20%7B%0Amargin%2Dleft%3A%200%3B%0A%7D%0Adl%20dd%20%7B%0Amargin%2Dbottom%3A%2013px%3B%0Amargin%2Dleft%3A%2013px%3B%0A%7D%0Adl%20dt%20%7B%0Afont%2Dweight%3A%20bold%3B%0A%7D%0Aul%20%7B%0Amargin%2Dtop%3A%200%3B%0A%7D%0Aul%20li%20%7B%0Alist%2Dstyle%3A%20circle%20outside%3B%0A%7D%0Aul%20ul%20%7B%0Amargin%2Dbottom%3A%200%3B%0A%7D%0Apre%2C%20code%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0Aborder%2Dradius%3A%203px%3B%0Acolor%3A%20%23333%3B%0A%7D%0Apre%20%7B%0Awhite%2Dspace%3A%20pre%2Dwrap%3B%20%0Aborder%2Dradius%3A%203px%3B%0Amargin%3A%205px%200px%2010px%200px%3B%0Apadding%3A%2010px%3B%0A%7D%0Apre%3Anot%28%5Bclass%5D%29%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Acode%20%7B%0Afont%2Dfamily%3A%20Consolas%2C%20Monaco%2C%20%27Courier%20New%27%2C%20monospace%3B%0Afont%2Dsize%3A%2085%25%3B%0A%7D%0Ap%20%3E%20code%2C%20li%20%3E%20code%20%7B%0Apadding%3A%202px%200px%3B%0A%7D%0Adiv%2Efigure%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0Aimg%20%7B%0Abackground%2Dcolor%3A%20%23FFFFFF%3B%0Apadding%3A%202px%3B%0Aborder%3A%201px%20solid%20%23DDDDDD%3B%0Aborder%2Dradius%3A%203px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Amargin%3A%200%205px%3B%0A%7D%0Ah1%20%7B%0Amargin%2Dtop%3A%200%3B%0Afont%2Dsize%3A%2035px%3B%0Aline%2Dheight%3A%2040px%3B%0A%7D%0Ah2%20%7B%0Aborder%2Dbottom%3A%204px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Apadding%2Dbottom%3A%202px%3B%0Afont%2Dsize%3A%20145%25%3B%0A%7D%0Ah3%20%7B%0Aborder%2Dbottom%3A%202px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Afont%2Dsize%3A%20120%25%3B%0A%7D%0Ah4%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23f7f7f7%3B%0Amargin%2Dleft%3A%208px%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Ah5%2C%20h6%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23ccc%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Aa%20%7B%0Acolor%3A%20%230033dd%3B%0Atext%2Ddecoration%3A%20none%3B%0A%7D%0Aa%3Ahover%20%7B%0Acolor%3A%20%236666ff%3B%20%7D%0Aa%3Avisited%20%7B%0Acolor%3A%20%23800080%3B%20%7D%0Aa%3Avisited%3Ahover%20%7B%0Acolor%3A%20%23BB00BB%3B%20%7D%0Aa%5Bhref%5E%3D%22http%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0Aa%5Bhref%5E%3D%22https%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0A%0Acode%20%3E%20span%2Ekw%20%7B%20color%3A%20%23555%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Edt%20%7B%20color%3A%20%23902000%3B%20%7D%20%0Acode%20%3E%20span%2Edv%20%7B%20color%3A%20%2340a070%3B%20%7D%20%0Acode%20%3E%20span%2Ebn%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Efl%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Ech%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Est%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Eco%20%7B%20color%3A%20%23888888%3B%20font%2Dstyle%3A%20italic%3B%20%7D%20%0Acode%20%3E%20span%2Eot%20%7B%20color%3A%20%23007020%3B%20%7D%20%0Acode%20%3E%20span%2Eal%20%7B%20color%3A%20%23ff0000%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Efu%20%7B%20color%3A%20%23900%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%20code%20%3E%20span%2Eer%20%7B%20color%3A%20%23a61717%3B%20background%2Dcolor%3A%20%23e3d2d2%3B%20%7D%20%0A" rel="stylesheet" type="text/css" />
+
+</head>
+
+<body>
+
+
+
+<div id="header">
+<h1 class="title">How to Use backblazer</h1>
+<h4 class="author"><em>Phill Clarke</em></h4>
+<h4 class="date"><em>2016-01-31</em></h4>
+</div>
+
+
+<div id="backblazer---what-is-it" class="section level2">
+<h2>backblazer - What is it?</h2>
+<p>If you’ve made it this far, you will know by now that <code>backblazer</code> is an R package providing bindings to the <a href="https://www.backblaze.com/b2/cloud-storage.html">Backblaze B2 cloud storage</a> API. All B2 API calls are covered in the <code>backblazer</code> package and all <a href="https://www.backblaze.com/b2/docs/">required B2 API parameters</a> are present. Most optional B2 API parameters are also included.</p>
+<p>Backblaze’s B2 product provides cheap and basic file storage in the cloud. It is targetted at developers and, apart from a web-based browser UI, Backblaze does not provide any file transfer or synchronisation clients.</p>
+<p>B2 does not support deep, folder based, tree structures. There is only the concept of individual buckets at the root level to aid file organisation.</p>
+<div id="getting-started" class="section level3">
+<h3>Getting Started</h3>
+<p>First, <a href="https://www.backblaze.com/b2/sign-up.html">register for an account on Backblaze B2</a>. The default page after logging in is a view of all available buckets. On this page will be a link to <em>Show Account ID and Application Key</em>. Click this only once. Make a note of the Account ID and Application Key. Every time this link is clicked, a new Application Key is generated.</p>
+</div>
+<div id="authorisation" class="section level3">
+<h3>Authorisation</h3>
+<p>It’s very straightforward.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">b2AuthorizeAccount</span>(<span class="dt">url =</span> <span class="st">&quot;https://api.backblaze.com/b2api/v1/b2_authorize_account&quot;</span>, 
+                   <span class="dt">accountId =</span> <span class="st">&quot;yourAccountId&quot;</span>, <span class="dt">authorizationKey =</span> <span class="st">&quot;yourAuthorisationKey&quot;</span>)</code></pre></div>
+<p>Obviously substitute your actual Account ID and Authorisation Key for the placeholders.</p>
+<p>You must authorise your account first. Nothing else in this package will work until the account has been authorised. This function will ultimately save an Rds file named <code>accountAuthorization.Rds</code> in the current working directory. This file is then silently used with all other functions in the package.</p>
+<p><strong>Note:</strong> Consider programatically deleting <code>accountAuthorization.Rds</code> on exit. A new Rds file will be written each time <code>b2AuthorizeAccount</code> is executed.</p>
+</div>
+<div id="working-with-buckets" class="section level3">
+<h3>Working with Buckets</h3>
+<p>Before any files can be uploaded, a first bucket must be created.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">b2CreateBucket</span>(<span class="dt">bucketName =</span> <span class="st">&quot;a-unique-bucket-name&quot;</span>, <span class="dt">bucketType =</span> <span class="st">&quot;allPrivate&quot;</span>)</code></pre></div>
+<p>Bucket names must be globally unique. That is, no two users may have the same bucket name. Therefore, a common word like <code>cats</code> is unlikely to be available. Buckets may only contain a mix of alpha-numeric characters and hyphens. No special characters, such as underscores, are accepted.</p>
+<p>There are just two bucket types: <code>allPublic</code> and <code>allPrivate</code>. They restrict bucket access as you would expect. Buckets marked <code>allPrivate</code> require a unique authorisation token to download files.</p>
+<p>All buckets are assigned a unique identifier. The unique identifier for all buckets in an account can be found with the <code>b2ListBuckets</code> function.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">b2ListBuckets</span>()</code></pre></div>
+<p><code>b2ListBuckets</code> accepts no further parameters. One column of the returned dataframe will contain the unique bucket IDs.</p>
+<p>Buckets may also be deleted.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">b2DeleteBucket</span>(<span class="dt">bucketId =</span> <span class="st">&quot;aUniqueBucketId&quot;</span>)</code></pre></div>
+<p>Substitute the placeholder with a valid bucket ID, obtained via <code>b2ListBuckets</code>. Buckets still containing files cannot be deleted.</p>
+<p>The bucket type, <code>allPublic</code> or <code>allPrivate</code>, may also be changed.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">b2UpdateBucket</span>(<span class="dt">bucketId =</span> <span class="st">&quot;aUniqueBucketId&quot;</span>, <span class="dt">bucketType =</span> <span class="st">&quot;allPrivate-or-allPublic&quot;</span>)</code></pre></div>
+</div>
+<div id="working-with-files" class="section level3">
+<h3>Working with Files</h3>
+<p>The first thing you probably want to do is upload a file. However, before this can be achieved, an upload URL must be obtained.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">uploadUrlReturn &lt;-<span class="st"> </span><span class="kw">b2GetUploadUrl</span>(<span class="dt">bucketId =</span> <span class="st">&quot;ff062d0e23056cb55226081c&quot;</span>)
+uploadUrl &lt;-<span class="st"> </span>uploadUrlReturn$uploadUrl
+authToken &lt;-<span class="st"> </span>uploadUrlReturn$authorizationToken</code></pre></div>
+<p>The authorisation token returned from <code>b2GetUploadUrl</code> is different to the account authorisation obtained with <code>b2AuthorizeAccount</code>. Do not confuse the two, or uploading files will not work. Both the upload URL and authorisation token are valid for 24 hours or until they’re not. There is a concept of the endpoint rejecting an upload. If this happens, both the URL and authorisation token are invalidated.</p>
+<p>It is possible to request multiple upload URLs, which can be used for faster, parallel uploading of multiple files.</p>
+<p>Armed with the upload URL and authorisation token, start uploading files.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">b2UploadFile</span>(authToken, uploadUrl, <span class="dt">fileName =</span> <span class="st">&quot;blah.txt&quot;</span>)</code></pre></div>
+<p>This will upload a file, named <code>blah.txt</code> from the current working directory, using the upload URL and authorisation token obtained previously.</p>
+<p>Behind the scenes, this function creates an SHA1 hash of the file to be uploaded, which is matched against the same hash created by B2 when the file is received. If the hashes don’t match, the upload is rejected.</p>
+<p>A complete list of accepted file types may be found in the <code>b2FileTypes.rds</code> file in this package. The file can be viewed manually if so desired.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">b2FileTypesLocation &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;b2FileTypes.rds&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;backblazer&quot;</span>)
+b2FileTypes &lt;-<span class="st"> </span><span class="kw">readRDS</span>(b2FileTypesLocation)</code></pre></div>
+<p>The same list is also available directly on the <a href="https://www.backblaze.com/b2/docs/content-types.html">B2 website</a>.</p>
+<p>Uploaded files may also be downloaded, but first it could be useful to view files on B2.</p>
+<p>Files can be listed by name.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">b2ListFileNames</span>(<span class="dt">bucketId =</span> <span class="st">&quot;aUniqueBucketId&quot;</span>)</code></pre></div>
+<p>Or by version.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">b2ListFileVersions</span>(<span class="dt">bucketId =</span> <span class="st">&quot;aUniqueBucketId&quot;</span>)</code></pre></div>
+<p>A B2 bucket may contain multiple files with the same name. This indicates multiple versions of the same file, based on upload time.</p>
+<p>It is possible to view further details for a single file.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">b2GetFileInfo</span>(<span class="dt">fileId =</span> <span class="st">&quot;a_unique_file_id&quot;</span>)</code></pre></div>
+<p>The file ID is specific to each file version and may be obtained via <code>b2ListFileVersions</code>.</p>
+<p>If there is some reason to hide a file (perhaps one file in a public bucket should be hidden), that’s also possible.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">b2HideFile</span>(<span class="dt">bucketId =</span> <span class="st">&quot;aUniqueBucketId&quot;</span>, <span class="dt">fileName =</span> <span class="st">&quot;blah.txt&quot;</span>)</code></pre></div>
+<p>Files may be downloaded by specifying either the file name or file ID</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Download file by name</span>
+<span class="kw">b2DownloadFileByName</span>(<span class="dt">bucketName =</span> <span class="st">&quot;aUniqueBucketName&quot;</span>, <span class="dt">fileName =</span> <span class="st">&quot;blah.txt&quot;</span>, <span class="dt">overwrite =</span> <span class="ot">TRUE</span>)
+
+<span class="co"># Download file by ID</span>
+<span class="kw">b2DownloadFileById</span>(<span class="dt">fileId =</span> <span class="st">&quot;a_unique_file_id&quot;</span>, <span class="dt">overwrite =</span> <span class="ot">TRUE</span>)</code></pre></div>
+<p>The <code>overwrite</code> parameter allows a local file of the same name to be overwritten, or not. <code>overwrite</code> defaults to FALSE, but is changed to TRUE in the above examples.</p>
+<p>Finally, it is possible to delete a file version. In order to completely remove a file from B2, all versions must be deleted.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">b2DeleteFileVersion</span>(<span class="dt">fileName =</span> <span class="st">&quot;blah.txt&quot;</span>, <span class="dt">fileId =</span> <span class="st">&quot;a_unique_file_id&quot;</span>)</code></pre></div>
+</div>
+<div id="final-words" class="section level3">
+<h3>Final Words</h3>
+<p>All successful API calls return a JSON status of 200. If a different status is returned, the function called will print an error with more details. Generally these error messsages are quite informative and will help to pinpoint the problem.</p>
+<p>There is much more information, regarding each of the mapped functions in this package, available on the <a href="https://www.backblaze.com/b2/docs/">Backblaze B2 documentation website</a>. It is suggested to thoroughly read the notes found there. Or just get on with it, hope for the best and then search the B2 documentation if it all goes wrong.</p>
+<p>The <code>backblazer</code> package is provided with absolutely no warranty. All <code>backblazer</code> functions have been tested and should work, but they may not work as you think they do. Be careful with your stuff. Things may go wrong. Author accepts no responsibility for lost, damaged or otherwise soiled files.</p>
+</div>
+</div>
+
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
